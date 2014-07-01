@@ -118,3 +118,39 @@ All emails sent by PHP are intercepted by MailCatcher. So normally no email woul
 ### Composer
 
 Composer binary is installed globally (to `/usr/local/bin`), so you can simply call `composer` from any directory.
+
+### Updating recipes
+
+Please note that for normal use, it is not needed to take the following steps.
+You will only need this if, for some reason, you want to update the cookbooks.
+This will usually only be the case if you maintain your own fork of
+vagrant-lamp. Also **do not** attempt to do this if you are not doing it from a
+Git clone. We rely on the git history to restore some files in the final step.
+
+The repository contains a Berkfile that can be used to fetch the latest versions
+of all the required recipes in a manner that ensures (assuming all cookbooks
+list their own dependencies correctly) they will work correctly together. For
+this to work, you will need [berkshelf](http://berkshelf.com) installed. The
+easiest way to do that is to install
+[Chef-DK](http://getchef.com/downloads/chef-dk).
+
+When you have the berks command available, first remove the cookbooks directory
+and any Berksfile.lock files:
+
+    $ rm -Rf cookbooks
+    $ find . -name Berksfile.lock -exec rm {} \;
+
+After having removed the old cookbooks, run berks with the Berksfile, telling it
+to put the cookbooks in the cookbooks directory:
+
+    $ berks vendor cookbooks
+
+Now, we have a small problem left to resolve; by removing the cookbooks
+directory (which was needed to allow berks to re-create if with all the latest
+and greatest cookbooks) we also removed the vagrant_main cookbook, which is
+custom for our project, so we need to ask git to restore it.
+
+    $ git checkout HEAD -- cookbooks/vagrant_main/
+
+Done and done. You probably want to inspect the changes and check in the changed
+cookbooks into Git.
