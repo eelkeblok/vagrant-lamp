@@ -876,7 +876,7 @@ file_uploads = On
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
-upload_max_filesize = 10M
+upload_max_filesize = 2M
 
 ; Maximum number of files that can be uploaded via a single request
 max_file_uploads = 20
@@ -1895,6 +1895,6 @@ ldap.max_links = -1
 ; tab-width: 4
 ; End:
 
-<% node['php']['directives'].each do |directive, value| -%>
+<% @directives.sort_by { |key, val| key }.each do |directive, value| -%>
 <%= "#{directive}=\"#{value}\"" %>
 <% end -%>

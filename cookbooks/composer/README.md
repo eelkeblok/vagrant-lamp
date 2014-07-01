@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/escapestudios-cookbooks/composer.png)](https://travis-ci.org/escapestudios-cookbooks/composer)
+
 Description
 ===========
 
@@ -13,6 +15,14 @@ Requirements
 
 * php
 
+This cookbook recommends the following cookbooks:
+
+* windows
+
+### Depending on your environment, these recommended cookbooks are actual dependencies (depends):
+* Using the community PHP cookbook to get PHP installed? You'll need the php cookbook to be available.
+* Running on Windows? You'll need the windows cookbook to be available.
+
 ## Platforms:
 
 * Ubuntu
@@ -20,22 +30,69 @@ Requirements
 * RHEL
 * CentOS
 * Fedora
+* Windows
 
 Attributes
 ==========
 
-* `node['composer']['install_globally']` - Installation method, ':source' or ':package' - default true
-* `node['composer']['prefix']` - Location prefix of where the installation files will go if installing globally
 * `node['composer']['url']` - Location of the source
 * `node['composer']['install_dir']` - Installation target directory (absolute or relative path) if installing locally
+* `node['composer']['bin']` - bin directory
+* `node['composer']['install_globally']` - Installation method, ':source' or ':package' - default true
+* `node['composer']['mask']` - Mask for composer.phar - 0755
+* `node['composer']['global_configs']` - Hash with global config options for users, eg. { "userX" => { "github-oauth" => { "github.com" => "userX_oauth_token" }, "vendor-dir" => "myvendordir" } } - default {}
+* `node['composer']['php_recipe']` - The php recipe to include, defaults to "php::default"
+
+Resources / Providers
+=====================
+
+This cookbook includes an LWRP for managing a Composer project
+
+### `composer_project`
+
+#### Actions
+- :install: Reads the composer.json file from the current directory, resolves the dependencies, and installs them into vendor - this is the default action
+- :update: Gets the latest versions of the dependencies and updates the composer.lock file
+- :dump_autoload: Updates the autoloader without having to go through an install or update (eg. because of new classes in a classmap package)
+
+#### Attribute parameters
+- project_dir: The directory where your project's composer.json can be found
+- dev: Install packages listed in require-dev, default false
+- quiet: Do not output any message, default true
+- optimize_autoloader: Optimize PSR0 packages to use classmaps, default false
+
+#### Examples
+```
+#install project vendors
+composer_project "/path/to/project" do
+    dev false
+    quiet true
+    prefer_dist false
+    action :install
+end
+
+#update project vendors
+composer_project "/path/to/project" do
+    dev false
+    quiet true
+    action :update
+end
+
+#dump-autoload for project
+composer_project "/path/to/project" do
+    dev false
+    quiet true
+    action :dump_autoload
+end
+```
 
 Usage
 =====
 
 1) include `recipe[composer]` in a run list
 2) tweak the attributes via attributes/default.rb
-	--- OR ---
-	override the attribute on a higher level (http://wiki.opscode.com/display/chef/Attributes#Attributes-AttributesPrecedence)
+    --- OR ---
+    override the attribute on a higher level (http://wiki.opscode.com/display/chef/Attributes#Attributes-AttributesPrecedence)
 
 References
 ==========
@@ -45,9 +102,9 @@ References
 License and Authors
 ===================
 
-Author: David Joos <david@escapestudios.com>
+Author: David Joos <david.joos@escapestudios.com>
 Author: Escape Studios Development <dev@escapestudios.com>
-Copyright: 2012-2013, Escape Studios
+Copyright: 2012-2014, Escape Studios
 
 Unless otherwise noted, all files are released under the MIT license,
 possible exceptions will contain licensing information in them.
