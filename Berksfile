@@ -6,7 +6,7 @@ source "https://api.berkshelf.com"
 cookbook 'apt'
 cookbook 'build-essential'
 cookbook 'git'
-cookbook 'apache2'
+cookbook 'apache2', git: 'https://github.com/onehealth-cookbooks/apache2.git', branch: 'COOK-3900'
 cookbook 'mysql'
 cookbook 'php'
 cookbook 'composer'
