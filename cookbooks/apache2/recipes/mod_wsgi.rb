@@ -26,7 +26,7 @@ when 'rhel', 'fedora', 'arch'
   end
 end
 
-file "#{node['apache']['dir']}/conf.d/wsgi.conf" do
+file "#{node['apache']['dir']}/conf-available/wsgi.conf" do
   action :delete
   backup false
 end

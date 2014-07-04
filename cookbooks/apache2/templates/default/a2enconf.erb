@@ -1,0 +1,32 @@
+#!/bin/sh -e
+
+SYSCONFDIR='<%= node['apache']['dir'] %>'
+
+if [ -z $1 ]; then
+        echo "Which config would you like to enable?"
+        echo -n "Your choices are: "
+        ls $SYSCONFDIR/conf-available/*.conf | \
+        sed -e "s,$SYSCONFDIR/conf-available/,,g" | sed -e 's/\.conf$//g;' | xargs echo
+        echo -n "Config name? "
+        read CONFNAME
+else
+        CONFNAME=$1
+fi
+
+if [ -e $SYSCONFDIR/conf-enabled/$CONFNAME.conf -a ]; then
+        echo "This config is already enabled!"
+        exit 0 
+fi
+
+if ! [ -e $SYSCONFDIR/conf-available/$CONFNAME.conf ]; then
+        echo "This config does not exist!"
+        exit 1
+fi
+
+for i in conf load; do 
+        if [ -e $SYSCONFDIR/conf-available/$CONFNAME.$i -a ! -e $SYSCONFDIR/conf-enabled/$CONFNAME.$i ]; then
+        ln -sf $SYSCONFDIR/conf-available/$CONFNAME.$i $SYSCONFDIR/conf-enabled/$CONFNAME.$i;
+        fi
+done
+
+echo "Config $CONFNAME installed; reload apache to enable."

@@ -25,17 +25,16 @@ if platform_family?('rhel', 'fedora', 'suse')
     notifies :run, 'execute[generate-module-list]', :immediately
   end
 
-  file "#{node['apache']['dir']}/conf.d/ssl.conf" do
+  file "#{node['apache']['dir']}/conf-available/ssl.conf" do
     action :delete
     backup false
   end
 end
 
-template 'ssl_ports.conf' do
-  path "#{node['apache']['dir']}/ports.conf"
-  source 'ports.conf.erb'
-  mode '0644'
-  notifies :restart, 'service[apache2]'
+template "#{node['apache']['dir']}/ports.conf" do
+  source    'ports.conf.erb'
+  mode      '0644'
+  notifies  :restart, 'service[apache2]'
 end
 
 apache_module 'ssl' do

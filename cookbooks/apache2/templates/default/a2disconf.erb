@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+SYSCONFDIR='<%= node['apache']['dir'] %>'
+
+if [ -z $1 ]; then
+        echo "Which config would you like to disable?"
+        echo -n "Your choices are: "
+        ls $SYSCONFDIR/conf-enabled/*.load | \
+        sed -e "s,$SYSCONFDIR/conf-enabled/,,g" | sed -e 's/\.conf$//g;' | xargs echo
+        echo -n "Config name? "
+        read CONFNAME
+else
+        CONFNAME=$1
+fi
+
+if ! [ -e $SYSCONFDIR/conf-enabled/$CONFNAME.conf ]; then
+        echo "This config is already disabled, or does not exist!"
+        exit 1
+fi
+
+rm -f $SYSCONFDIR/conf-enabled/$CONFNAME.*
+echo "Config $CONFNAME disabled; reload apache to fully disable."

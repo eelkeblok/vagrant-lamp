@@ -18,10 +18,6 @@
 #
 
 case node['platform_family']
-when 'suse'
-  package 'apache2-mod_xsendfile' do
-    notifies :run, 'execute[generate-module-list]', :immediately
-  end
 when 'debian'
   package 'libapache2-mod-xsendfile'
 when 'rhel', 'fedora'
@@ -30,7 +26,7 @@ when 'rhel', 'fedora'
   end
 end
 
-file "#{node['apache']['dir']}/conf.d/xsendfile.conf" do
+file "#{node['apache']['dir']}/conf-available/xsendfile.conf" do
   action :delete
   backup false
 end

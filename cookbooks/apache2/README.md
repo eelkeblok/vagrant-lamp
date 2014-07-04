@@ -2,6 +2,7 @@ apache2 Cookbook
 ================
 [![Build Status](https://secure.travis-ci.org/onehealth-cookbooks/apache2.png?branch=master)](http://travis-ci.org/onehealth-cookbooks/apache2)
 
+
 This cookbook provides a complete Debian/Ubuntu style Apache HTTPD
 configuration. Non-Debian based distributions such as Red Hat/CentOS,
 ArchLinux and others supported by this cookbook will have a
@@ -19,6 +20,10 @@ sites (vhosts). The scripts are:
 This cookbook ships with templates of these scripts for non
 Debian/Ubuntu platforms. The scripts are used in the __Definitions__
 below.
+
+Note: This version is a fork of the original Opscode Apache2 cookbook, to provide much needed support for Apache 2.4. 
+      For more details see https://github.com/opscode-cookbooks/apache2/pull/100
+
 
 Requirements
 ============
@@ -129,8 +134,8 @@ Tests
 =====
 
 This cookbook in the
-[source repository](https://github.com/onehealth-cookbooks/apache2)
-contains chefspec, minitest and cucumber tests. This is an initial proof of
+[source repository](https://github.com/opscode-cookbooks/apache2)
+contains minitest and cucumber tests. This is an initial proof of
 concept that will be fleshed out with more supporting infrastructure
 at a future time.
 
@@ -151,8 +156,6 @@ attributes are determined based on the node's platform. See the
 attributes/default.rb file for default values in the case statement at
 the top of the file.
 
-* `node['apache']['package']` - Package name for Apache2
-* `node['apache']['perl_pkg']` - Package name for Perl
 * `node['apache']['dir']` - Location for the Apache configuration
 * `node['apache']['log_dir']` - Location for Apache logs
 * `node['apache']['error_log']` - Location for the default error log
@@ -160,8 +163,6 @@ the top of the file.
 * `node['apache']['user']` - User Apache runs as
 * `node['apache']['group']` - Group Apache runs as
 * `node['apache']['binary']` - Apache httpd server daemon
-* `node['apache']['docroot_dir']` - Location for docroot
-* `node['apache']['cgibin_dir']` - Location for cgi-bin
 * `node['apache']['icondir']` - Location for icons
 * `node['apache']['cache_dir']` - Location for cached files used by Apache itself or recipes
 * `node['apache']['pid_file']` - Location of the PID file for Apache httpd
@@ -183,7 +184,6 @@ values are noted.
 * `node['apache']['keepalive']` - Value for the KeepAlive directive. Default is On.
 * `node['apache']['keepaliverequests']` - Value for MaxKeepAliveRequests. Default is 100.
 * `node['apache']['keepalivetimeout']` - Value for the KeepAliveTimeout directive. Default is 5.
-* `node['apache']['sysconfig_additional_params']` - Additionals variables set in sysconfig file. Default is empty.
 * `node['apache']['default_modules']` - Array of module names. Can take "mod_FOO" or "FOO" as names, where FOO is the apache module, e.g. "`mod_status`" or "`status`".
 * `node['apache']['mpm']` - With apache.version 2.4, specifies what Multi-Processing Module to enable. Default is "prefork".
 
@@ -576,13 +576,11 @@ License and Authors
 * Author:: Seth Chisamore <schisamo@opscode.com>
 * Author:: Gilles Devaux <gilles@peerpong.com>
 * Author:: Sander van Zoest <svanzoest@onehealth.com>
-* Author:: Taylor Price <tprice@onehealth.com>
 
-* Copyright:: 2013-2014, OneHealth Solutions, Inc.
 * Copyright:: 2009-2012, Opscode, Inc
 * Copyright:: 2011, Atriso
 * Copyright:: 2011, CustomInk, LLC.
-* Copyright:: 2013, OneHealth Solutions, Inc.
+* Copyright:: 2013-2014, OneHealth Solutions, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

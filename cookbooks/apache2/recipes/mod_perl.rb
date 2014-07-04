@@ -21,15 +21,9 @@
 
 case node['platform_family']
 when 'debian'
-  %w(libapache2-mod-perl2 libapache2-request-perl apache2-mpm-prefork).each do |pkg|
+  %w[libapache2-mod-perl2 libapache2-request-perl apache2-mpm-prefork].each do |pkg|
     package pkg
   end
-when 'suse'
-  package 'apache2-mod_perl' do
-    notifies :run, 'execute[generate-module-list]', :immediately
-  end
-
-  package 'perl-Apache2-Request'
 when 'rhel', 'fedora'
   package 'mod_perl' do
     notifies :run, 'execute[generate-module-list]', :immediately
@@ -38,7 +32,7 @@ when 'rhel', 'fedora'
   package 'perl-libapreq2'
 end
 
-file "#{node['apache']['dir']}/conf.d/perl.conf" do
+file "#{node['apache']['dir']}/conf-available/perl.conf" do
   action :delete
   backup false
 end

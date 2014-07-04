@@ -24,7 +24,7 @@ elsif platform_family?('rhel', 'fedora')
     notifies :run, 'execute[generate-module-list]', :immediately
   end
 
-  file "#{node['apache']['dir']}/conf.d/fcgid.conf" do
+  file "#{node['apache']['dir']}/conf-available/fcgid.conf" do
     action :delete
     backup false
   end

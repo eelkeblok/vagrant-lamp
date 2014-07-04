@@ -1,15 +1,12 @@
-source 'https://api.berkshelf.com'
-
+site :opscode
 metadata
 
 group :integration do
-  cookbook 'iptables'
-  cookbook 'logrotate'
-  cookbook 'apt', '~> 2.4'
-  cookbook 'yum', '~> 3.2'
-  cookbook 'fqdn'
-  cookbook 'minitest-handler'
+  cookbook 'apt', '~> 2.0'
+  cookbook 'yum', '~> 2.0'
 end
 
-cookbook 'apache2_test', path: 'test/fixtures/cookbooks/apache2_test'
+group :test do
+  cookbook "apache2_test", :path => "./test/kitchen/cookbooks/apache2_test"
+end
 

@@ -30,7 +30,7 @@ end
 
 case node['platform_family']
 when 'rhel', 'fedora', 'suse'
-  file "#{node['apache']['dir']}/conf.d/subversion.conf" do
+  file "#{node['apache']['dir']}/conf-available/subversion.conf" do
     action :delete
     backup false
   end
