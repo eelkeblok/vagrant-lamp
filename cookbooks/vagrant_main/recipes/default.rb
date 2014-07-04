@@ -91,13 +91,17 @@ git "/var/www/webgrind" do
   reference "master"
   action :sync
 end
-template "#{node[:apache][:dir]}/conf.d/webgrind.conf" do
+template "#{node[:apache][:dir]}/conf-available/webgrind.conf" do
   source "webgrind.conf.erb"
   owner "root"
   group "root"
   mode 0644
   action :create
   notifies :restart, resources("service[apache2]"), :delayed
+end
+execute "a2enconf webgrind" do
+  command "/usr/sbin/a2enconf webgrind"
+  notifies :restart, 'service[apache2]'
 end
 template "/var/www/webgrind/config.php" do
   source "webgrind.config.php.erb"
