@@ -2,6 +2,7 @@ Vagrant LAMP
 ============
 
 My default LAMP development stack configuration for Vagrant.
+This is the PHP 5.5/Apache 2.4 version based on Ubuntu 14.04 (Trusty Tahr).
 
 Installation:
 -------------
