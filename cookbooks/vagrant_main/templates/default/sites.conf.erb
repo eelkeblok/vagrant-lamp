@@ -32,9 +32,7 @@
   CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
 
   RewriteEngine On
-  RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
-  # level 0 => Do not log rewrite
-  RewriteLogLevel 0
+  LogLevel rewrite:trace2
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -71,9 +69,7 @@
   CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
 
   RewriteEngine On
-  RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
-  # level 0 => Do not log rewrite
-  RewriteLogLevel 0
+  LogLevel rewrite:trace2
 
   SSLEngine on
   SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
