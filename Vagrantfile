@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
   if defined? VagrantPlugins::PersistentStorage
     config.persistent_storage.enabled = true
     config.persistent_storage.location = "vagrant-mysql.vdi"
-    config.persistent_storage.size = 5000
+    config.persistent_storage.size = 20000
     config.persistent_storage.mountname = 'mysql'
     config.persistent_storage.filesystem = 'ext4'
     config.persistent_storage.mountpoint = '/var/lib/mysql'
