@@ -56,6 +56,8 @@ Vagrant.configure("2") do |config|
     # For example to change memory or number of CPUs:
     vb.customize ["modifyvm", :id, "--memory", "2048"]
     vb.customize ["modifyvm", :id, "--cpus", "1"]
+    # Enable NAT name resolving
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   # Enable provisioning with chef zero, specifying a cookbooks path, roles
