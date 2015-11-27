@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "192.168.33.10"
 
   # Mount share folder over nfs (has performance advantages with large number of projects)
-  config.vm.synced_folder "./", "/vagrant/", id: "vagrant-root", :nfs => true
+  config.vm.synced_folder "./", "/vagrant/", id: "vagrant-root", :nfs => true, :mount_options => ["dmode=775", "fmode=775"]
   # /var/log over NFS will not work, probably something to do with trying to mount something on a location that already exists.
   config.vm.synced_folder "vagrant-logs/", "/var/log/", id: "vagrant-logs", :owner=> 'vagrant', :group=>'www-data', :mount_options => ["dmode=775", "fmode=664"]
 
