@@ -111,7 +111,7 @@ php_extensions.push "xdebug"
 
 # Install Webgrind
 git "/var/www/webgrind" do
-  repository 'git://github.com/jokkedk/webgrind.git'
+  repository 'https://github.com/michaelschiller/webgrind.git'
   reference "master"
   action :sync
 end
